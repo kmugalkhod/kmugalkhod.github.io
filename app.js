@@ -21,17 +21,16 @@ const projects = [
       "Keycloak",
       "AWS EKS"
     ],
-    "impact": "~70% fewer candidate tickets for commit analysis",
+    "impact": "Jira and GitLab MCP servers · Word and CSV reports",
     "date": "MAY 2025 — PRESENT",
     "problem": "Release teams need to reconcile issues, commits, deployed tags, vulnerabilities, and test executions. The information is spread across systems, making release preparation and review difficult to follow.",
     "architecture": "An Angular interface calls FastAPI services and agent workflows. Two MCP servers expose Jira and GitLab tools. Amazon Bedrock or LiteLLM supplies the model layer; Keycloak handles authentication and AWS EKS hosts the application.",
     "details": [
       "Built Jira and GitLab MCP integrations for issue, commit, merge-request, tag, and deployment data.",
       "Implemented release notes, environment-tag comparisons, sprint analytics, vulnerability reporting, and XRAY test-execution analysis.",
-      "Filtered for tickets with commits before downstream commit analysis, focusing the workflow on relevant code changes.",
       "Generated Word and CSV reports with supporting issue and repository links, delivered through S3 downloads."
     ],
-    "outcome": "Reduced the candidate set for commit analysis from about 1,000 tickets to 300—approximately 70% fewer candidates. This measures processing scope, not an unmeasured reduction in runtime or cost. The reports bring supporting evidence together for stakeholder review.",
+    "outcome": "Brings issues, code changes, deployed tags, vulnerabilities, and test results into one release workflow. Teams get release notes and stakeholder reports with supporting issue and repository links, instead of reconciling each system by hand.",
     "art": "release"
   },
   {
