@@ -208,7 +208,7 @@ const grid=document.querySelector('#project-grid');
 projects.forEach((project,index)=>{
   const card=document.createElement('article');
   card.className='project-card';card.dataset.id=project.id;
-  card.innerHTML=`<span class="icon-tile ${overview[project.id].color}" aria-hidden="true">${illustration(project.art)}</span><div class="row-copy"><div class="row-heading"><h3>${project.title}</h3>${project.repo?'<span class="open-badge">Open source</span>':''}</div><p class="card-description">${overview[project.id].text}</p><p class="project-evidence">${project.impact}</p></div><button class="details-button" data-project="${project.id}" aria-label="Explore ${project.title}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></button>`;
+  card.innerHTML=`<span class="icon-tile ${overview[project.id].color}" aria-hidden="true">${illustration(project.art)}</span><div class="row-copy"><div class="row-heading"><h3>${project.title}</h3>${project.repo?'<span class="open-badge">Open source</span>':''}</div><p class="card-description">${overview[project.id].text}</p><p class="project-evidence">${project.impact}</p><div class="card-tags">${project.tags.slice(0,4).map(tag=>`<span>${tag}</span>`).join('')}${project.tags.length>4?`<span class="more">+${project.tags.length-4}</span>`:''}</div></div><button class="details-button" data-project="${project.id}" aria-label="Explore ${project.title}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></button>`;
   grid.append(card);
 });
 const filterButtons=[...document.querySelectorAll('[data-filter]')];
@@ -322,3 +322,8 @@ sectionLinks.forEach(link=>link.addEventListener('click',()=>{
   sectionLinks.forEach(item=>item.removeAttribute('aria-current'));
   link.setAttribute('aria-current','location');
 }));
+
+const topbar=document.querySelector('.topbar');
+const syncTopbar=()=>topbar.classList.toggle('scrolled',window.scrollY>8);
+window.addEventListener('scroll',syncTopbar,{passive:true});
+syncTopbar();
