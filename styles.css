@@ -18,3 +18,105 @@ dialog{width:min(900px,calc(100% - 40px));padding:42px}.dialog-close{width:40px;
 @media(max-width:600px){.section-heading{align-items:flex-start;flex-wrap:wrap;gap:5px}.card-description,.job-description{font-size:16px}.intro-actions{column-gap:18px}.dialog-grid{gap:26px}.project-evidence{font-size:13px}}
 .job-responsibilities{padding-left:18px;margin:14px 0 0;color:var(--muted);font-size:16px;line-height:1.8}.timeline .job-responsibilities li{display:list-item;margin-top:10px}.job-responsibilities strong{color:var(--text);font-weight:500}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* ===== Refresh: sticky top bar, bolder hero, card-based sections ===== */
+:root{--radius:14px;--live:#3ccf8e;--lift:0 1px 0 #ffffff08 inset,0 12px 32px -18px #000a}
+html[data-theme="light"]{--lift:0 1px 2px #0000000a,0 14px 32px -20px #0003}
+html{scroll-padding-top:80px}body{text-rendering:optimizeLegibility;counter-reset:section}
+/* Top bar */
+.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 80%,transparent);-webkit-backdrop-filter:saturate(1.5) blur(14px);backdrop-filter:saturate(1.5) blur(14px);border-bottom:1px solid transparent;transition:border-color .25s}
+.topbar.scrolled{border-bottom-color:var(--line)}
+.topbar-inner{display:flex;align-items:center;gap:22px;height:62px}
+.brand span{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:var(--text);color:var(--bg);font:600 12px/1 var(--mono);letter-spacing:.02em;transition:transform .2s}
+.brand:hover span{transform:rotate(-6deg)}
+.topbar nav{flex:1;gap:4px;font-size:13.5px}
+.topbar nav>a{padding:6px 11px;border-radius:8px;transition:background .2s,color .2s}
+.topbar nav>a:after{display:none}
+.topbar nav>a:hover{background:var(--hover)}
+.topbar nav>a[aria-current]{background:var(--tag);color:var(--text);box-shadow:inset 0 0 0 1px var(--line)}
+/* Hero */
+.hero{padding-top:64px}
+.status-pill{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;line-height:1.4;color:var(--muted);padding:6px 13px 6px 11px;border:1px solid var(--line);border-radius:999px;background:var(--panel)}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--live);box-shadow:0 0 0 3px color-mix(in srgb,var(--live) 22%,transparent);animation:live 2.4s ease-in-out infinite}
+@keyframes live{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--live) 6%,transparent)}}
+#hero-title{font-size:clamp(38px,6.4vw,54px);font-weight:600;line-height:1.04;letter-spacing:-.045em;margin-top:24px}
+.hero .role-line{font-size:15px;margin-top:10px}
+.hero-lede{font-size:clamp(20px,2.7vw,25px);line-height:1.42;letter-spacing:-.022em;font-weight:450;color:var(--text);margin-top:28px;max-width:640px;text-wrap:balance}
+.hero-lede em{font-style:normal;color:var(--accent)}
+.hero .intro-prose{margin-top:18px;line-height:1.8}
+.intro-actions{margin-top:28px}
+.button{border-radius:10px;min-height:44px;padding:11px 18px;font-size:14px;box-shadow:var(--lift)}
+.stats{list-style:none;margin:40px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--lift);overflow:hidden}
+.stats li{padding:18px 20px}.stats li+li{border-left:1px solid var(--line)}
+.stats strong{display:block;font-size:26px;line-height:1.15;font-weight:600;letter-spacing:-.035em;font-variant-numeric:tabular-nums}
+.stats span{display:block;font-size:12.5px;line-height:1.5;color:var(--muted);margin-top:6px}
+/* Sections */
+.separator{height:1px;background:var(--line);margin-top:64px;margin-bottom:56px}
+.section-heading h2{counter-increment:section;font-size:12px;letter-spacing:.09em;color:var(--muted)}
+.section-heading h2:before{content:counter(section,decimal-leading-zero);color:var(--accent);margin-right:10px}
+.subheading{color:var(--muted)}
+/* Filters as a segmented control */
+.filter-bar{margin:20px 0 16px}
+.filters{gap:2px;padding:3px;background:var(--panel);border:1px solid var(--line);border-radius:11px}
+.filters button,.filters button:first-child{margin:0;border-radius:8px;padding:5px 11px;min-height:32px;font-size:12.5px}
+.filters button.active{background:var(--tag);color:var(--text);box-shadow:inset 0 0 0 1px var(--line)}
+/* Project cards */
+.project-grid{gap:12px}
+.project-card{margin-inline:0;padding:22px;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);box-shadow:var(--lift);transition:border-color .2s,transform .2s,box-shadow .2s}
+.project-card:hover{background:var(--panel);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));transform:translateY(-2px)}
+.row-copy h3{font-size:17px}
+.card-description{font-size:15px;line-height:1.7;margin-top:6px}
+.project-evidence{display:flex;align-items:center;gap:8px;font-weight:500;margin-top:12px}
+.project-evidence:before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
+.card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.card-tags span,.chips span{font:11.5px/1 var(--mono);padding:6px 8px;border-radius:6px;color:var(--muted);background:var(--tag);border:1px solid var(--line)}
+.card-tags .more{color:var(--faint)}
+.work-note{padding-left:2px;margin-top:16px;font-size:12px}
+/* Experience */
+.timeline{margin-top:28px;gap:34px}
+.timeline>li{position:relative}
+.timeline>li:not(:last-child):before{content:'';position:absolute;left:17.5px;top:50px;bottom:-26px;width:1px;background:linear-gradient(var(--line),transparent)}
+.job-content h3{font-size:17px}
+.timeline-meta{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;margin-top:6px}
+.job-description,.job-responsibilities{font-size:15.5px;line-height:1.75}
+.current-badge{color:var(--live);border-color:color-mix(in srgb,var(--live) 35%,transparent);background:color-mix(in srgb,var(--live) 10%,transparent)}
+.skills-section{border-top:1px solid var(--line);margin-top:48px;padding-top:40px}
+.skill-grid{gap:14px;margin-top:20px}
+.skill-item{padding:18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);box-shadow:var(--lift)}
+.skill-item h4{font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.education{margin-top:24px;font-size:13px}
+/* Contact */
+.contact-intro{font-size:16px}
+.contact-list{gap:10px;margin-top:26px}
+.contact-link{padding:14px 18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);box-shadow:var(--lift);transition:border-color .2s,transform .2s}
+.contact-link:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--line));transform:translateY(-1px)}
+.contact-row{gap:10px}
+#copy-email{width:66px;height:auto;align-self:stretch;border-radius:var(--radius);background:var(--panel)}
+#copy-status{padding-left:2px}
+footer{border-top:1px solid var(--line);margin-top:48px!important;font-size:12px}
+dialog{border-radius:18px}
+@media(max-width:600px){
+  .topbar-inner{height:56px;gap:10px}
+  .brand span{width:28px;height:28px;font-size:11px;border-radius:8px}
+  .topbar nav{gap:0;justify-content:space-between}
+  .topbar nav>a{padding:6px 8px;font-size:12.5px;min-height:36px}
+  .topbar nav>a>svg{display:none}
+  .hero{padding-top:40px}
+  .status-pill{font-size:11.5px}
+  .hero .role-line{font-size:13.5px}
+  .hero-lede{margin-top:22px}
+  .stats{margin-top:30px}.stats li{padding:14px 12px}
+  .stats strong{font-size:20px}.stats span{font-size:11px}
+  .separator{margin-top:48px;margin-bottom:40px}
+  .filters button,.filters button:first-child{padding:5px 8px;font-size:11.5px}
+  .project-card{padding:16px 14px;gap:12px}
+  .card-description,.job-description,.job-responsibilities{font-size:15px}
+  .timeline>li:not(:last-child):before{left:16.5px;top:46px}
+  .skill-grid{grid-template-columns:1fr}
+  .contact-link{padding:12px 14px}
+  #copy-email{width:52px}
+}
+@media(max-width:380px){.brand{display:none}.topbar nav>a{padding:6px 6px;font-size:12px}#result-count{display:none}}
+.project-evidence{align-items:flex-start}.project-evidence:before{margin-top:.62em}
+@media(max-width:600px){.hero .intro-prose{line-height:1.75}.project-card{grid-template-columns:32px minmax(0,1fr) 16px}.project-card .icon-tile{width:32px;height:32px}}
