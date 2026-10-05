@@ -1,32 +1,32 @@
-# Kunal Mugalkhod — GitHub Pages portfolio
+# kmugalkhod.github.io
 
-This is a ready-to-publish copy of your portfolio. It uses HTML, CSS, and JavaScript, with no backend, package installation, or build step. The package includes your latest project cards, BPMN agent workflow, animations, and downloadable resume.
+Personal portfolio of **Kunal Mugalkhod**, Full-Stack GenAI Developer — live at **https://kmugalkhod.github.io/**.
 
-## Publish using the GitHub website
+Plain HTML, CSS, and JavaScript. No framework, build step, or package install; GitHub Pages serves the files from the `main` branch root.
 
-1. Sign in to your GitHub account, `kmugalkhod`.
-2. Create a **public** repository named **kmugalkhod.github.io**. If you already own that repository, use it and review its existing files before replacing them.
-3. Extract the ZIP. In your repository, choose **Add file > Upload files** and upload the extracted contents. Put **index.html**, **styles.css**, **script.js**, and the **assets** folder directly at the repository root. Upload the contents, not the ZIP and not a containing folder. Include **.nojekyll** if it is visible in your file manager; these plain static files also work with the default Pages publishing process.
-4. Commit the upload to the **main** branch.
-5. Open **Settings > Pages**. Under **Build and deployment**, set **Source** to **Deploy from a branch**, choose **main** and **/(root)**, then click **Save**.
-6. Wait for the Pages deployment to complete. Open the **Visit site** link in Settings > Pages. Your expected address is **https://kmugalkhod.github.io/**. Publication may take up to 10 minutes.
+## Files
 
-Enabling this GitHub Pages site makes the portfolio, contact email, and downloadable resume publicly available. Your existing private portfolio remains separate.
+| File | Purpose |
+| --- | --- |
+| `index.html` | Page content: intro, experience, skills, education, contact, SEO/social metadata |
+| `app.js` | Project data and cards, project filters, project detail dialog, theme toggle, nav highlighting |
+| `styles.css` | Layout, light/dark themes, responsive styles |
+| `404.html` | Not-found page served by GitHub Pages |
+| `Kunal-Mugalkhod-Resume.pdf` | Resume linked from the "Download resume" button |
+| `og-image.png` | 1200×630 preview image used when the site is shared on LinkedIn, Slack, X, etc. |
+| `robots.txt`, `sitemap.xml` | Search-engine hints |
+| `fonts/` | Self-hosted Schibsted Grotesk (SIL OFL) |
 
-## Alternative repository name
+## Common edits
 
-You can instead use a public repository named `portfolio`. Follow the same steps; the expected address will be **https://kmugalkhod.github.io/portfolio/**. Local asset links in this copy are relative, so the same files work at either address.
+- **Add or change a project:** edit the `projects` array at the top of `app.js`, then add a matching entry (colour + one-line summary) in the `overview` object further down. Set `repo` to show an "Open source" badge and a GitHub link. `filters` controls which filter buttons show the project (`agents`, `rag`, `tools`).
+- **Link straight to a project:** every project dialog has a shareable URL, e.g. `https://kmugalkhod.github.io/#project-lightcode`.
+- **Experience, skills, contact:** edit `index.html`.
+- **Resume:** replace `Kunal-Mugalkhod-Resume.pdf` (keep the filename).
 
-## Update the content
+## Preview locally
 
-- **index.html**: text, projects, experience, skills, links, and BPMN workflow diagrams.
-- **styles.css**: layout, colors, fonts, and responsive styling.
-- **script.js**: navigation and subtle animation.
-- **assets/Kunal_Mugalkhod_Resume.pdf**: resume download.
-
-Commit future edits to `main`; GitHub Pages publishes updates from the configured branch. External Google Fonts are used with local fallback fonts.
-
-## Official GitHub instructions
-
-- Creating a GitHub Pages site: https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site
-- Configuring the publishing source: https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
+```sh
+python3 -m http.server 8000
+# open http://localhost:8000
+```

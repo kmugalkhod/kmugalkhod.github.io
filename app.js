@@ -236,13 +236,27 @@ function openProject(id){
   previousFocus=document.activeElement;
   dialogContent.innerHTML=`<p class="eyebrow">${project.category} · ${project.date}</p><h2 id="dialog-title">${project.title}</h2><p class="dialog-summary">${project.description}</p><div class="dialog-grid"><div><h3 class="detail-heading">WHY IT MATTERS</h3><p>${project.problem}</p></div><div><h3 class="detail-heading">HOW IT WORKS</h3><p>${project.architecture}</p></div><div><h3 class="detail-heading">WHAT I BUILT</h3><ul>${project.details.map(detail=>`<li>${detail}</li>`).join('')}</ul></div><div><h3 class="detail-heading">RESULT & VALUE</h3><p>${project.outcome}</p></div></div><div class="tags">${project.tags.map(tag=>`<span>${tag}</span>`).join('')}</div>${project.id==='bpmn'?flowMarkup:''}<div class="modal-links">${project.repo?`<a href="${project.repo}" target="_blank" rel="noopener noreferrer">View source on GitHub ↗</a>`:'<a href="mailto:kmugalkhod@gmail.com">Discuss this project ↗</a>'}</div><p class="dialog-footnote">${project.repo?'Independent open-source project.':'Enterprise work at Cybage.'}</p>`;
   dialog.showModal();dialog.scrollTop=0;
+  if(location.hash!=='#project-'+id)history.replaceState(null,'','#project-'+id);
   if(project.id==='bpmn')setupFlow();
   document.querySelector('.dialog-close').focus({preventScroll:true});
 }
 grid.addEventListener('click',event=>{const button=event.target.closest('[data-project]');if(button)openProject(button.dataset.project);});
 document.querySelector('.dialog-close').addEventListener('click',()=>dialog.close());
 dialog.addEventListener('click',event=>{const bounds=dialog.getBoundingClientRect();if(event.target===dialog&&(event.clientX<bounds.left||event.clientX>bounds.right||event.clientY<bounds.top||event.clientY>bounds.bottom))dialog.close();});
-dialog.addEventListener('close',()=>{previousFocus?.focus({preventScroll:true});});
+dialog.addEventListener('close',()=>{
+  if(location.hash.startsWith('#project-'))history.replaceState(null,'',location.pathname+location.search);
+  previousFocus?.focus({preventScroll:true});
+});
+// Shareable project links, e.g. https://kmugalkhod.github.io/#project-lightcode
+function openProjectFromHash(){
+  const match=location.hash.match(/^#project-([\w-]+)$/);
+  if(match&&projects.some(item=>item.id===match[1])&&!dialog.open){
+    document.querySelector('#work').scrollIntoView({behavior:'instant'});
+    openProject(match[1]);
+  }
+}
+window.addEventListener('hashchange',openProjectFromHash);
+openProjectFromHash();
 
 function setupFlow(){
   let stage='ready',attempt=1;
@@ -280,7 +294,13 @@ function applyTheme(theme){
   themeToggle.setAttribute('title',label);
   document.querySelector('meta[name="theme-color"]').setAttribute('content',value==='dark'?'#141414':'#f6f5f3');
 }
-try{applyTheme(localStorage.getItem('kunal-portfolio-theme'));}catch{applyTheme('dark');}
+// The inline head script already picked the saved or system theme; sync the toggle with it.
+applyTheme(document.documentElement.dataset.theme);
+const systemLight=window.matchMedia('(prefers-color-scheme: light)');
+systemLight.addEventListener?.('change',event=>{
+  let saved=null;try{saved=localStorage.getItem('kunal-portfolio-theme');}catch{}
+  if(!saved)applyTheme(event.matches?'light':'dark');
+});
 themeToggle.addEventListener('click',()=>{
   const theme=document.documentElement.dataset.theme==='dark'?'light':'dark';
   applyTheme(theme);
