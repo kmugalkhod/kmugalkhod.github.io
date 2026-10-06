@@ -60,6 +60,10 @@ nav a:hover{color:var(--text)}
 /* Sections */
 main>section{margin-top:72px}
 main>section.hero{margin-top:88px}
+/* Section separator: a hairline that fades at both ends, with a small diamond at its centre */
+main>section+section{position:relative;margin-top:56px;padding-top:56px}
+main>section+section::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--line) 20%,var(--line) 80%,transparent)}
+main>section+section::after{content:'';position:absolute;top:-3.5px;left:50%;width:7px;height:7px;margin-left:-3.5px;transform:rotate(45deg);border:1px solid var(--faint);background:var(--bg);box-shadow:0 0 0 6px var(--bg)}
 .label{font-size:15px;font-weight:500;color:var(--faint);margin-bottom:16px}
 
 /* Hero */
@@ -157,6 +161,7 @@ dialog::backdrop{background:#0009;backdrop-filter:blur(4px)}
   nav{gap:14px;font-size:14px}
   main>section{margin-top:56px}
   main>section.hero{margin-top:56px}
+  main>section+section{margin-top:44px;padding-top:44px}
   .row{flex-direction:column;gap:2px}
   .row-meta{text-align:left;white-space:normal;font-size:15px}
   .row svg{position:absolute;right:12px;top:16px}
