@@ -8,8 +8,8 @@ Plain HTML, CSS, and JavaScript. No framework, build step, or package install; G
 
 | File | Purpose |
 | --- | --- |
-| `index.html` | Page content: intro, experience, skills, education, contact, SEO/social metadata |
-| `app.js` | Project data and cards, project filters, project detail dialog, theme toggle, nav highlighting |
+| `index.html` | Page content: intro, experience, stack, contact, SEO/social metadata |
+| `app.js` | Project data, Work list, project detail dialog, theme toggle |
 | `styles.css` | Layout, light/dark themes, responsive styles |
 | `404.html` | Not-found page served by GitHub Pages |
 | `Kunal-Mugalkhod-Resume.pdf` | Resume linked from the "Download resume" button |
@@ -19,9 +19,9 @@ Plain HTML, CSS, and JavaScript. No framework, build step, or package install; G
 
 ## Common edits
 
-- **Add or change a project:** edit the `projects` array at the top of `app.js`, then add a matching entry (colour + one-line summary) in the `overview` object further down. Set `repo` to show an "Open source" badge and a GitHub link. `filters` controls which filter buttons show the project (`agents`, `rag`, `tools`).
+- **Add or change a project:** edit the `projects` array at the top of `app.js`, then add a matching one-line entry in the `summary` object below it (shown in the Work list). Set `repo` to show an "Open source" badge and a GitHub link.
 - **Link straight to a project:** every project dialog has a shareable URL, e.g. `https://kmugalkhod.github.io/#project-lightcode`.
-- **Experience, skills, contact:** edit `index.html`.
+- **Experience, stack, contact:** edit `index.html`.
 - **Resume:** replace `Kunal-Mugalkhod-Resume.pdf` (keep the filename).
 
 ## Preview locally
