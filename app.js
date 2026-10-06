@@ -5,10 +5,6 @@ const projects = [
     "id": "release",
     "title": "Release Assistant",
     "category": "AGENTIC AI / ENTERPRISE",
-    "filters": [
-      "agents",
-      "tools"
-    ],
     "subtitle": "Release intelligence from the systems teams already use.",
     "description": "An agentic application that brings Jira issues, GitLab changes, and QA data into one workflow for release preparation and stakeholder reporting.",
     "tags": [
@@ -37,10 +33,6 @@ const projects = [
     "id": "atlas",
     "title": "Code Atlas",
     "category": "RAG / CODE INTELLIGENCE",
-    "filters": [
-      "rag",
-      "tools"
-    ],
     "subtitle": "A practical starting point for unfamiliar code.",
     "description": "A repository-grounded RAG assistant that lets developers ask questions about GitHub source code and receive answers informed by relevant implementation context.",
     "tags": [
@@ -67,9 +59,6 @@ const projects = [
     "id": "ltsa",
     "title": "LTSA AI Assistant",
     "category": "RAG / ENTERPRISE KNOWLEDGE",
-    "filters": [
-      "rag"
-    ],
     "subtitle": "Enterprise knowledge with retrieval and evaluation.",
     "description": "An enterprise knowledge assistant supporting LTSA and LT Examination workflows, with Amazon OpenSearch and Amazon Bedrock Knowledge Bases at the retrieval layer.",
     "tags": [
@@ -97,9 +86,6 @@ const projects = [
     "id": "bpmn",
     "title": "BPMN 3.0 Agent Workflow",
     "category": "AGENTIC AI / PROCESS AUTOMATION",
-    "filters": [
-      "agents"
-    ],
     "subtitle": "Separate generation with a validation gate.",
     "description": "A process-diagram workflow where diagram elements and edges are generated separately, validated, regenerated when invalid, and merged only after validation succeeds.",
     "tags": [
@@ -126,10 +112,6 @@ const projects = [
     "id": "lightcode",
     "title": "Lightcode",
     "category": "DEVELOPER TOOLS / OPEN SOURCE",
-    "filters": [
-      "agents",
-      "tools"
-    ],
     "subtitle": "A coding agent you can inspect and run.",
     "description": "My independent, open-source AI coding agent, with terminal and browser interfaces, permission-controlled tools, and persistent conversation history.",
     "tags": [
@@ -158,9 +140,6 @@ const projects = [
     "id": "catalog",
     "title": "API Catalog",
     "category": "DEVELOPER TOOLS / API GOVERNANCE",
-    "filters": [
-      "tools"
-    ],
     "subtitle": "API quality checks built into delivery.",
     "description": "An API Catalog POC with a reusable GitLab pipeline for validating OpenAPI specifications and publishing versioned documentation to S3 on release tags.",
     "tags": [
@@ -184,46 +163,23 @@ const projects = [
   }
 ];
 
-function illustration(type) {
-  const paths={
-    release:'<rect x="4" y="3" width="16" height="18" rx="3"/><path d="m8 9 2 2 5-5M8 16h8"/>',
-    code:'<path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18"/>',
-    rag:'<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 4 16 4 16 0V5M4 12c0 4 16 4 16 0"/>',
-    bpmn:'<rect x="2" y="3" width="7" height="6" rx="1"/><rect x="15" y="3" width="7" height="6" rx="1"/><rect x="8" y="16" width="8" height="6" rx="1"/><path d="M5 9v4h14V9m-7 4v3"/>',
-    terminal:'<rect x="2" y="4" width="20" height="16" rx="3"/><path d="m6 9 3 3-3 3m6 0h5"/>',
-    pipeline:'<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18m-12 0v12m4-8h4m-4 4h4"/>'
-  };
-  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+paths[type]+'</svg>';
-}
-const overview={
-  release:{color:'blue',text:'Connects Jira, GitLab, and QA data to generate traceable release notes, tag comparisons, and stakeholder reports.'},
-  atlas:{color:'violet',text:'Turns GitHub source code into a searchable knowledge base so developers can ask implementation questions and explore unfamiliar repositories.'},
-  ltsa:{color:'teal',text:'Connects enterprise documents to conversational answers using OpenSearch and Bedrock Knowledge Bases, with reranking and quality checks.'},
-  bpmn:{color:'amber',text:'Generates diagram elements and edges separately, checks their validity, and regenerates invalid outputs before the final merge.'},
-  lightcode:{color:'slate',text:'A coding agent with shared terminal and browser sessions, permission-controlled tools, provider switching, and persistent history.'},
-  catalog:{color:'coral',text:'A catalog and reusable delivery pipeline that checks OpenAPI specifications and publishes versioned documentation on release tags.'}
+// One-line summaries shown in the Work list; full details open in the dialog.
+const summary={
+  release:'Release notes and reports from Jira, GitLab, and QA.',
+  atlas:'Ask questions about a GitHub codebase and get grounded answers.',
+  ltsa:'Enterprise knowledge assistant on OpenSearch and Bedrock.',
+  bpmn:'Agent-built process diagrams, validated before merge.',
+  lightcode:'Open-source coding agent for the terminal and browser.',
+  catalog:'OpenAPI validation and versioned docs in GitLab CI.'
 };
-const grid=document.querySelector('#project-grid');
-projects.forEach((project,index)=>{
-  const card=document.createElement('article');
-  card.className='project-card';card.dataset.id=project.id;
-  card.innerHTML=`<span class="icon-tile ${overview[project.id].color}" aria-hidden="true">${illustration(project.art)}</span><div class="row-copy"><div class="row-heading"><h3>${project.title}</h3>${project.repo?'<span class="open-badge">Open source</span>':''}</div><p class="card-description">${overview[project.id].text}</p><p class="project-evidence">${project.impact}</p><div class="card-tags">${project.tags.slice(0,4).map(tag=>`<span>${tag}</span>`).join('')}${project.tags.length>4?`<span class="more">+${project.tags.length-4}</span>`:''}</div></div><button class="details-button" data-project="${project.id}" aria-label="Explore ${project.title}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></button>`;
-  grid.append(card);
+const list=document.querySelector('#project-list');
+projects.forEach(project=>{
+  const item=document.createElement('li');
+  item.innerHTML=`<button class="row" data-project="${project.id}"><span class="row-title">${project.title}${project.repo?'<span class="badge">Open source</span>':''}</span><span class="row-meta">${summary[project.id]}</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button>`;
+  list.append(item);
 });
-const filterButtons=[...document.querySelectorAll('[data-filter]')];
-filterButtons.forEach(button=>button.addEventListener('click',()=>{
-  const filter=button.dataset.filter;
-  filterButtons.forEach(other=>{const active=other===button;other.classList.toggle('active',active);other.setAttribute('aria-pressed',String(active));});
-  let count=0;
-  document.querySelectorAll('.project-card').forEach(card=>{
-    const project=projects.find(item=>item.id===card.dataset.id);
-    card.hidden=filter!=='all'&&!project.filters.includes(filter);
-    card.classList.remove('reveal');if(!card.hidden){count++;void card.offsetWidth;card.classList.add('reveal');}
-  });
-  document.querySelector('#result-count').textContent=`${count} project${count===1?'':'s'}`;
-}));
 
-const navigation=document.querySelector('#navigation');
+
 
 const dialog=document.querySelector('#project-dialog');
 const dialogContent=document.querySelector('#dialog-content');
@@ -239,7 +195,7 @@ function openProject(id){
   if(project.id==='bpmn')setupFlow();
   document.querySelector('.dialog-close').focus({preventScroll:true});
 }
-grid.addEventListener('click',event=>{const button=event.target.closest('[data-project]');if(button)openProject(button.dataset.project);});
+list.addEventListener('click',event=>{const button=event.target.closest('[data-project]');if(button)openProject(button.dataset.project);});
 document.querySelector('.dialog-close').addEventListener('click',()=>dialog.close());
 dialog.addEventListener('click',event=>{const bounds=dialog.getBoundingClientRect();if(event.target===dialog&&(event.clientX<bounds.left||event.clientX>bounds.right||event.clientY<bounds.top||event.clientY>bounds.bottom))dialog.close();});
 dialog.addEventListener('close',()=>{
@@ -284,45 +240,62 @@ document.querySelector('#copy-email').addEventListener('click',async()=>{
   catch{status.textContent='Copy manually: kmugalkhod@gmail.com';}
 });
 
-const themeToggle=document.querySelector('#theme-toggle');
+// Appearance panel: theme, font, and colour tint, saved per visitor.
+const root=document.documentElement;
+const settingsToggle=document.querySelector('#settings-toggle');
+const settingsPanel=document.querySelector('#settings-panel');
+const store={
+  get(key){try{return localStorage.getItem('kunal-portfolio-'+key);}catch{return null;}},
+  set(key,value){try{localStorage.setItem('kunal-portfolio-'+key,value);}catch{}}
+};
+const fontFamilies={inter:'Inter',geist:'Geist'};
+function syncPressed(attr,value){
+  settingsPanel.querySelectorAll(`[${attr}]`).forEach(button=>button.setAttribute('aria-pressed',String(button.getAttribute(attr)===value)));
+}
+function syncThemeColor(){
+  // Read the rendered background through a canvas so mixed colours come back as plain hex.
+  const ctx=document.createElement('canvas').getContext('2d');
+  ctx.fillStyle=getComputedStyle(document.body).backgroundColor;ctx.fillRect(0,0,1,1);
+  const [r,g,b]=ctx.getImageData(0,0,1,1).data;
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#'+[r,g,b].map(n=>n.toString(16).padStart(2,'0')).join(''));
+}
 function applyTheme(theme){
-  const value=theme==='light'?'light':'dark';
-  document.documentElement.dataset.theme=value;
-  const label=value==='dark'?'Switch to light theme':'Switch to dark theme';
-  themeToggle.setAttribute('aria-label',label);
-  themeToggle.setAttribute('title',label);
-  document.querySelector('meta[name="theme-color"]').setAttribute('content',value==='dark'?'#141414':'#f6f5f3');
+  root.dataset.theme=theme==='light'?'light':'dark';
+  syncPressed('data-theme-choice',root.dataset.theme);
+  syncThemeColor();
 }
-// The inline head script already picked the saved or system theme; sync the toggle with it.
-applyTheme(document.documentElement.dataset.theme);
-const systemLight=window.matchMedia('(prefers-color-scheme: light)');
-systemLight.addEventListener?.('change',event=>{
-  let saved=null;try{saved=localStorage.getItem('kunal-portfolio-theme');}catch{}
-  if(!saved)applyTheme(event.matches?'light':'dark');
-});
-themeToggle.addEventListener('click',()=>{
-  const theme=document.documentElement.dataset.theme==='dark'?'light':'dark';
-  applyTheme(theme);
-  try{localStorage.setItem('kunal-portfolio-theme',theme);}catch{}
-});
-
-const sectionLinks=[...navigation.querySelectorAll('a')];
-const observedSections=['home','work','journey','contact'].map(id=>document.getElementById(id));
-if('IntersectionObserver' in window){
-  const sectionObserver=new IntersectionObserver(entries=>{
-    const visible=entries.filter(entry=>entry.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top);
-    if(!visible.length)return;
-    const id=visible[0].target.id;
-    sectionLinks.forEach(link=>{if(link.getAttribute('href')==='#'+id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');});
-  },{rootMargin:'-5% 0px -55% 0px',threshold:0});
-  observedSections.forEach(section=>{if(section)sectionObserver.observe(section);});
+function applyFont(font){
+  if(fontFamilies[font]){
+    let link=document.querySelector('#font-css');
+    if(!link){link=document.createElement('link');link.rel='stylesheet';link.id='font-css';document.head.append(link);}
+    link.href=`https://fonts.googleapis.com/css2?family=${fontFamilies[font]}:wght@400;500;600&display=swap`;
+    root.dataset.font=font;
+  }else{font='schibsted';delete root.dataset.font;}
+  syncPressed('data-font',font);
 }
-sectionLinks.forEach(link=>link.addEventListener('click',()=>{
-  sectionLinks.forEach(item=>item.removeAttribute('aria-current'));
-  link.setAttribute('aria-current','location');
-}));
-
-const topbar=document.querySelector('.topbar');
-const syncTopbar=()=>topbar.classList.toggle('scrolled',window.scrollY>8);
-window.addEventListener('scroll',syncTopbar,{passive:true});
-syncTopbar();
+function applyTint(tint){
+  if(['pink','teal','indigo','amber','violet'].includes(tint))root.dataset.tint=tint;
+  else{tint='neutral';delete root.dataset.tint;}
+  syncPressed('data-tint',tint);
+  syncThemeColor();
+}
+// The inline head script already applied saved choices; sync the panel with them.
+applyTheme(root.dataset.theme);
+applyFont(root.dataset.font);
+applyTint(root.dataset.tint);
+window.matchMedia('(prefers-color-scheme: light)').addEventListener?.('change',event=>{
+  if(!store.get('theme'))applyTheme(event.matches?'light':'dark');
+});
+settingsPanel.addEventListener('click',event=>{
+  const button=event.target.closest('button');if(!button)return;
+  if(button.dataset.themeChoice){applyTheme(button.dataset.themeChoice);store.set('theme',button.dataset.themeChoice);}
+  else if(button.dataset.font){applyFont(button.dataset.font);store.set('font',button.dataset.font);}
+  else if(button.dataset.tint){applyTint(button.dataset.tint);store.set('tint',button.dataset.tint);}
+});
+function setPanel(open){
+  settingsPanel.hidden=!open;
+  settingsToggle.setAttribute('aria-expanded',String(open));
+}
+settingsToggle.addEventListener('click',()=>setPanel(settingsPanel.hidden));
+document.addEventListener('click',event=>{if(!settingsPanel.hidden&&!event.target.closest('.settings'))setPanel(false);});
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!settingsPanel.hidden){setPanel(false);settingsToggle.focus();}});
