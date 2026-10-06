@@ -240,24 +240,62 @@ document.querySelector('#copy-email').addEventListener('click',async()=>{
   catch{status.textContent='Copy manually: kmugalkhod@gmail.com';}
 });
 
-const themeToggle=document.querySelector('#theme-toggle');
-function applyTheme(theme){
-  const value=theme==='light'?'light':'dark';
-  document.documentElement.dataset.theme=value;
-  const label=value==='dark'?'Switch to light theme':'Switch to dark theme';
-  themeToggle.setAttribute('aria-label',label);
-  themeToggle.setAttribute('title',label);
-  document.querySelector('meta[name="theme-color"]').setAttribute('content',value==='dark'?'#111111':'#fbfbfa');
+// Appearance panel: theme, font, and colour tint, saved per visitor.
+const root=document.documentElement;
+const settingsToggle=document.querySelector('#settings-toggle');
+const settingsPanel=document.querySelector('#settings-panel');
+const store={
+  get(key){try{return localStorage.getItem('kunal-portfolio-'+key);}catch{return null;}},
+  set(key,value){try{localStorage.setItem('kunal-portfolio-'+key,value);}catch{}}
+};
+const fontFamilies={inter:'Inter',geist:'Geist'};
+function syncPressed(attr,value){
+  settingsPanel.querySelectorAll(`[${attr}]`).forEach(button=>button.setAttribute('aria-pressed',String(button.getAttribute(attr)===value)));
 }
-// The inline head script already picked the saved or system theme; sync the toggle with it.
-applyTheme(document.documentElement.dataset.theme);
-const systemLight=window.matchMedia('(prefers-color-scheme: light)');
-systemLight.addEventListener?.('change',event=>{
-  let saved=null;try{saved=localStorage.getItem('kunal-portfolio-theme');}catch{}
-  if(!saved)applyTheme(event.matches?'light':'dark');
+function syncThemeColor(){
+  // Read the rendered background through a canvas so mixed colours come back as plain hex.
+  const ctx=document.createElement('canvas').getContext('2d');
+  ctx.fillStyle=getComputedStyle(document.body).backgroundColor;ctx.fillRect(0,0,1,1);
+  const [r,g,b]=ctx.getImageData(0,0,1,1).data;
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#'+[r,g,b].map(n=>n.toString(16).padStart(2,'0')).join(''));
+}
+function applyTheme(theme){
+  root.dataset.theme=theme==='light'?'light':'dark';
+  syncPressed('data-theme-choice',root.dataset.theme);
+  syncThemeColor();
+}
+function applyFont(font){
+  if(fontFamilies[font]){
+    let link=document.querySelector('#font-css');
+    if(!link){link=document.createElement('link');link.rel='stylesheet';link.id='font-css';document.head.append(link);}
+    link.href=`https://fonts.googleapis.com/css2?family=${fontFamilies[font]}:wght@400;500;600&display=swap`;
+    root.dataset.font=font;
+  }else{font='schibsted';delete root.dataset.font;}
+  syncPressed('data-font',font);
+}
+function applyTint(tint){
+  if(['pink','teal','indigo','amber','violet'].includes(tint))root.dataset.tint=tint;
+  else{tint='neutral';delete root.dataset.tint;}
+  syncPressed('data-tint',tint);
+  syncThemeColor();
+}
+// The inline head script already applied saved choices; sync the panel with them.
+applyTheme(root.dataset.theme);
+applyFont(root.dataset.font);
+applyTint(root.dataset.tint);
+window.matchMedia('(prefers-color-scheme: light)').addEventListener?.('change',event=>{
+  if(!store.get('theme'))applyTheme(event.matches?'light':'dark');
 });
-themeToggle.addEventListener('click',()=>{
-  const theme=document.documentElement.dataset.theme==='dark'?'light':'dark';
-  applyTheme(theme);
-  try{localStorage.setItem('kunal-portfolio-theme',theme);}catch{}
+settingsPanel.addEventListener('click',event=>{
+  const button=event.target.closest('button');if(!button)return;
+  if(button.dataset.themeChoice){applyTheme(button.dataset.themeChoice);store.set('theme',button.dataset.themeChoice);}
+  else if(button.dataset.font){applyFont(button.dataset.font);store.set('font',button.dataset.font);}
+  else if(button.dataset.tint){applyTint(button.dataset.tint);store.set('tint',button.dataset.tint);}
 });
+function setPanel(open){
+  settingsPanel.hidden=!open;
+  settingsToggle.setAttribute('aria-expanded',String(open));
+}
+settingsToggle.addEventListener('click',()=>setPanel(settingsPanel.hidden));
+document.addEventListener('click',event=>{if(!settingsPanel.hidden&&!event.target.closest('.settings'))setPanel(false);});
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!settingsPanel.hidden){setPanel(false);settingsToggle.focus();}});

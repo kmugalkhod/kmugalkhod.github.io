@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#111111">
   <title>Page not found — Kunal Mugalkhod</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <script>try{var t=localStorage.getItem('kunal-portfolio-theme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';document.documentElement.dataset.theme=t;}catch(e){}</script>
+  <script>try{var d=document.documentElement,s=localStorage,t=s.getItem('kunal-portfolio-theme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';d.dataset.theme=t;var c=s.getItem('kunal-portfolio-tint');if(/^(pink|teal|indigo|amber|violet)$/.test(c))d.dataset.tint=c;var f=s.getItem('kunal-portfolio-font');if(f==='inter'||f==='geist'){d.dataset.font=f;var l=document.createElement('link');l.rel='stylesheet';l.id='font-css';l.href='https://fonts.googleapis.com/css2?family='+(f==='inter'?'Inter':'Geist')+':wght@400;500;600&display=swap';document.head.appendChild(l);}}catch(e){}</script>
   <link rel="stylesheet" href="/styles.css">
   <style>.not-found{min-height:100vh;display:flex;flex-direction:column;justify-content:center;gap:14px}.not-found h1{font-size:30px;letter-spacing:-.04em}.not-found p{color:var(--muted)}.not-found .button{align-self:flex-start;margin-top:10px}</style>
 </head>

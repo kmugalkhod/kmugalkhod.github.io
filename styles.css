@@ -4,6 +4,20 @@
 :root{color-scheme:dark;--bg:#111;--panel:#1a1a1a;--hover:#1c1c1c;--text:#ececec;--muted:#a3a3a3;--faint:#737373;--line:#262626;--accent:#9db4e0;--button:#ececec;--button-text:#111;--green:#3fb950;--font:"Schibsted Grotesk",ui-sans-serif,system-ui,sans-serif;--mono:ui-monospace,SFMono-Regular,Consolas,monospace}
 html[data-theme="light"]{color-scheme:light;--bg:#fbfbfa;--panel:#fff;--hover:#f1f1ef;--text:#171717;--muted:#525252;--faint:#8a8a8a;--line:#e7e5e4;--accent:#2f5da0;--button:#171717;--button-text:#fff;--green:#1a7f37}
 
+/* Fonts (Inter and Geist load from Google Fonts only when picked) */
+html[data-font="inter"]{--font:Inter,ui-sans-serif,system-ui,sans-serif}
+html[data-font="geist"]{--font:Geist,ui-sans-serif,system-ui,sans-serif}
+
+/* Colour tints: each sets a palette, and the whole page is derived from it */
+html[data-tint="pink"]{--t50:#fdf4ff;--t200:#f5d0fe;--t300:#f0abfc;--t400:#e879f9;--t600:#c026d3;--t700:#a21caf;--t800:#86198f;--t900:#701a75;--t950:#4a044e}
+html[data-tint="teal"]{--t50:#f0fdfa;--t200:#99f6e4;--t300:#5eead4;--t400:#2dd4bf;--t600:#0d9488;--t700:#0f766e;--t800:#115e59;--t900:#134e4a;--t950:#042f2e}
+html[data-tint="indigo"]{--t50:#eef2ff;--t200:#c7d2fe;--t300:#a5b4fc;--t400:#818cf8;--t600:#4f46e5;--t700:#4338ca;--t800:#3730a3;--t900:#312e81;--t950:#1e1b4b}
+html[data-tint="amber"]{--t50:#fffbeb;--t200:#fde68a;--t300:#fcd34d;--t400:#fbbf24;--t600:#b45309;--t700:#92400e;--t800:#92400e;--t900:#78350f;--t950:#451a03}
+html[data-tint="violet"]{--t50:#f5f3ff;--t200:#ddd6fe;--t300:#c4b5fd;--t400:#a78bfa;--t600:#7c3aed;--t700:#6d28d9;--t800:#5b21b6;--t900:#4c1d95;--t950:#2e1065}
+html[data-tint][data-theme="light"]{--bg:var(--t50);--panel:color-mix(in srgb,#fff 70%,var(--t50));--hover:color-mix(in srgb,var(--t200) 40%,var(--t50));--line:color-mix(in srgb,var(--t200) 70%,var(--t50));--text:var(--t900);--muted:var(--t700);--faint:var(--t600);--accent:var(--t600);--button:var(--t900);--button-text:var(--t50)}
+html[data-tint][data-theme="dark"]{--bg:color-mix(in srgb,var(--t950) 35%,#0a0a0a);--panel:color-mix(in srgb,var(--t950) 50%,#111);--hover:color-mix(in srgb,var(--t900) 35%,#111);--line:color-mix(in srgb,var(--t800) 40%,#1a1a1a);--text:var(--t50);--muted:var(--t200);--faint:var(--t400);--accent:var(--t300);--button:var(--t50);--button-text:var(--t950)}
+body{transition:background-color .25s,color .25s}
+
 /* Base */
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:24px}
@@ -26,8 +40,22 @@ svg{display:block;flex-shrink:0;width:18px;height:18px}
 .brand{font-weight:600;letter-spacing:-.02em}
 nav{display:flex;gap:20px;margin-left:auto;font-size:15px;color:var(--muted)}
 nav a:hover{color:var(--text)}
-.theme-toggle{width:32px;height:32px;display:grid;place-items:center;border-radius:8px;color:var(--muted)}
-.theme-toggle:hover{background:var(--hover);color:var(--text)}
+.icon-button{width:32px;height:32px;display:grid;place-items:center;border-radius:8px;color:var(--muted)}
+.icon-button:hover,.icon-button[aria-expanded="true"]{background:var(--hover);color:var(--text)}
+
+/* Appearance panel */
+.settings{position:relative}
+.settings-panel{position:absolute;right:0;top:calc(100% + 8px);z-index:50;display:grid;gap:12px;padding:12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 40px #0003}
+.pills{display:flex;gap:4px}
+.pills button{flex:1;font-size:13px;line-height:1;padding:7px 10px;border-radius:7px;color:var(--muted);border:1px solid var(--line);text-align:center;white-space:nowrap}
+.pills button:hover{color:var(--text)}
+.pills button[aria-pressed="true"]{background:var(--text);border-color:var(--text);color:var(--bg)}
+.pills [data-font="inter"]{font-family:Inter,var(--font)}
+.pills [data-font="geist"]{font-family:Geist,var(--font)}
+.swatches{display:flex;justify-content:space-between;gap:8px;padding-top:12px;border-top:1px dashed var(--line)}
+.swatch{width:18px;height:18px;border-radius:50%;background:var(--swatch);box-shadow:0 0 0 1px #0002 inset;transition:transform .15s}
+.swatch:hover{transform:scale(1.15)}
+.swatch[aria-pressed="true"]{box-shadow:0 0 0 2px var(--panel),0 0 0 4px var(--swatch)}
 
 /* Sections */
 main>section{margin-top:72px}
