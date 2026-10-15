@@ -13,6 +13,7 @@ Plain HTML, CSS, and JavaScript. No framework, build step, or package install; G
 | `styles.css` | Layout, light/dark themes, responsive styles |
 | `404.html` | Not-found page served by GitHub Pages |
 | `Kunal-Mugalkhod-Resume.pdf` | Resume linked from the "Download resume" button |
+| `Kunal-Mugalkhod-Resume.docx` | Editable Word version of the same resume |
 | `og-image.png` | 1200×630 preview image used when the site is shared on LinkedIn, Slack, X, etc. |
 | `robots.txt`, `sitemap.xml` | Search-engine hints |
 | `fonts/` | Self-hosted Schibsted Grotesk (SIL OFL) |
@@ -23,7 +24,7 @@ Plain HTML, CSS, and JavaScript. No framework, build step, or package install; G
 - **Link straight to a project:** every project dialog has a shareable URL, e.g. `https://kmugalkhod.github.io/#project-lightcode`.
 - **Experience, stack, contact:** edit `index.html`.
 - **Appearance panel:** the gear button lets visitors pick light/dark, a font (Schibsted, Inter, Geist), and a colour tint. Tint palettes live at the top of `styles.css`; choices are saved in the visitor's browser.
-- **Resume:** replace `Kunal-Mugalkhod-Resume.pdf` (keep the filename).
+- **Resume:** edit `Kunal-Mugalkhod-Resume.docx`, export it to PDF, and replace `Kunal-Mugalkhod-Resume.pdf` (keep both filenames).
 
 ## Preview locally
 
