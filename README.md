@@ -9,7 +9,7 @@ Plain HTML, CSS, and JavaScript. No framework, build step, or package install; G
 | File | Purpose |
 | --- | --- |
 | `index.html` | Page content: intro, experience, stack, contact, SEO/social metadata |
-| `app.js` | Project data, Work list, project detail dialog, appearance panel (theme, font, colour) |
+| `app.js` | Project data (set `live` for a production link and "Live" badge, `repo` for open source), Work list, project detail dialog, appearance panel (theme, font, colour) |
 | `styles.css` | Layout, light/dark themes, responsive styles |
 | `404.html` | Not-found page served by GitHub Pages |
 | `Kunal-Mugalkhod-Resume.pdf` | Resume linked from the "Download resume" button |
