@@ -2,6 +2,37 @@
 // All project content is local; no external APIs, analytics, or private endpoints.
 const projects = [
   {
+    "id": "ragstudio",
+    "title": "RAG Quality Studio",
+    "category": "RAG / INDEPENDENT PRODUCT",
+    "subtitle": "Build, test, and ship RAG pipelines in one workspace.",
+    "description": "My independent full-stack workspace for building RAG applications: ingest sources into versioned indexes, design answer pipelines visually, compare versions with RAGAS experiments, and deploy answers as an API or website widget. Live in production.",
+    "tags": [
+      "FastAPI",
+      "Celery",
+      "PostgreSQL",
+      "pgvector",
+      "React",
+      "React Flow",
+      "RAGAS",
+      "Docker"
+    ],
+    "impact": "Live at ragqualitystudio.com",
+    "date": "SEP 2026 — PRESENT",
+    "problem": "Teams building RAG struggle to see why an answer is good or bad. Sources change, chunking and search settings interact, and without fixed index versions and repeatable experiments it is hard to tell whether a change actually improved quality.",
+    "architecture": "A React and React Flow workspace talks to FastAPI. Celery workers and Redis run ingestion and evaluation jobs whose state lives in PostgreSQL. Published indexes are immutable pgvector versions; models are reached through OpenRouter. Clerk handles organization sign-in, and GitHub Actions deploys to a Docker Compose server behind Caddy.",
+    "details": [
+      "Built ingestion for uploaded files (PDF, Word, PowerPoint, Excel, CSV, HTML, Markdown) and website, Amazon S3, Notion, and Confluence sources, with layout-aware PDF extraction, OCR, structure-aware cleaning and chunking, and duplicate and sensitive-data checks.",
+      "Published immutable pgvector index versions searchable by meaning, BM25 keywords, or both, with optional reranking and inspectable provenance.",
+      "Built a visual answer-pipeline editor with cited answers, a check that cited numbers appear in their sources, and follow-up questions.",
+      "Ran background RAGAS experiments to compare saved pipeline versions on the same dataset, with per-question evidence, latency, and cost.",
+      "Shipped a deployable answer API and embeddable chat widget with Clerk organization auth, per-organization model approvals, and budgets."
+    ],
+    "outcome": "A working product, live in production, that takes a team from raw sources to a measured, deployed RAG answer, with every index, pipeline, and experiment version kept so results can be reproduced and compared.",
+    "art": "rag",
+    "live": "https://ragqualitystudio.com/"
+  },
+  {
     "id": "release",
     "title": "Release Assistant",
     "category": "AGENTIC AI / ENTERPRISE",
@@ -165,6 +196,7 @@ const projects = [
 
 // One-line summaries shown in the Work list; full details open in the dialog.
 const summary={
+  ragstudio:'Build, evaluate, and deploy RAG pipelines.',
   release:'Release notes and reports from Jira, GitLab, and QA.',
   atlas:'Ask questions about a GitHub codebase and get grounded answers.',
   ltsa:'Enterprise knowledge assistant on OpenSearch and Bedrock.',
@@ -175,7 +207,7 @@ const summary={
 const list=document.querySelector('#project-list');
 projects.forEach(project=>{
   const item=document.createElement('li');
-  item.innerHTML=`<button class="row" data-project="${project.id}"><span class="row-title">${project.title}${project.repo?'<span class="badge">Open source</span>':''}</span><span class="row-meta">${summary[project.id]}</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button>`;
+  item.innerHTML=`<button class="row" data-project="${project.id}"><span class="row-title">${project.title}${project.live?'<span class="badge">Live</span>':''}${project.repo?'<span class="badge">Open source</span>':''}</span><span class="row-meta">${summary[project.id]}</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button>`;
   list.append(item);
 });
 
@@ -189,7 +221,7 @@ const flowMarkup=`<div class="dialog-flow"><h3>Follow the agent workflow</h3><p>
 function openProject(id){
   const project=projects.find(item=>item.id===id);if(!project)return;
   previousFocus=document.activeElement;
-  dialogContent.innerHTML=`<p class="eyebrow">${project.category} · ${project.date}</p><h2 id="dialog-title">${project.title}</h2><p class="dialog-summary">${project.description}</p><div class="dialog-grid"><div><h3 class="detail-heading">WHY IT MATTERS</h3><p>${project.problem}</p></div><div><h3 class="detail-heading">HOW IT WORKS</h3><p>${project.architecture}</p></div><div><h3 class="detail-heading">WHAT I BUILT</h3><ul>${project.details.map(detail=>`<li>${detail}</li>`).join('')}</ul></div><div><h3 class="detail-heading">RESULT & VALUE</h3><p>${project.outcome}</p></div></div><div class="tags">${project.tags.map(tag=>`<span>${tag}</span>`).join('')}</div>${project.id==='bpmn'?flowMarkup:''}<div class="modal-links">${project.repo?`<a href="${project.repo}" target="_blank" rel="noopener noreferrer">View source on GitHub ↗</a>`:'<a href="mailto:kmugalkhod@gmail.com">Discuss this project ↗</a>'}</div><p class="dialog-footnote">${project.repo?'Independent open-source project.':'Enterprise work at Cybage.'}</p>`;
+  dialogContent.innerHTML=`<p class="eyebrow">${project.category} · ${project.date}</p><h2 id="dialog-title">${project.title}</h2><p class="dialog-summary">${project.description}</p><div class="dialog-grid"><div><h3 class="detail-heading">WHY IT MATTERS</h3><p>${project.problem}</p></div><div><h3 class="detail-heading">HOW IT WORKS</h3><p>${project.architecture}</p></div><div><h3 class="detail-heading">WHAT I BUILT</h3><ul>${project.details.map(detail=>`<li>${detail}</li>`).join('')}</ul></div><div><h3 class="detail-heading">RESULT & VALUE</h3><p>${project.outcome}</p></div></div><div class="tags">${project.tags.map(tag=>`<span>${tag}</span>`).join('')}</div>${project.id==='bpmn'?flowMarkup:''}<div class="modal-links">${project.live?`<a href="${project.live}" target="_blank" rel="noopener noreferrer">Visit ragqualitystudio.com ↗</a>`:project.repo?`<a href="${project.repo}" target="_blank" rel="noopener noreferrer">View source on GitHub ↗</a>`:'<a href="mailto:kmugalkhod@gmail.com">Discuss this project ↗</a>'}</div><p class="dialog-footnote">${project.live?'Independent project, live in production.':project.repo?'Independent open-source project.':'Enterprise work at Cybage.'}</p>`;
   dialog.showModal();dialog.scrollTop=0;
   if(location.hash!=='#project-'+id)history.replaceState(null,'','#project-'+id);
   if(project.id==='bpmn')setupFlow();
